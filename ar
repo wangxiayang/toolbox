@@ -1,0 +1,38 @@
+#!/bin/bash
+# record all ar commands
+
+ROOTDIR=/home/xywang/osv/app-ir/redis-5.0.3
+if [ -z $ROOTDIR ]; then
+	echo "error: no rootdir specified in $0"
+	exit 1
+fi
+
+MAKEFILE_NAME=$ROOTDIR/Makefile.llvmir
+LOG_NAME=$ROOTDIR/Makefile.llvmir.log
+PWD=`pwd`
+
+AR=/usr/bin/ar
+LLVM_LINK=llvm-link
+
+$AR $@
+exit_status=$?
+
+if [ $exit_status != 0 ]; then
+	exit $?
+fi
+
+PARAMS=($@)
+PARAMS[0]=-o	# command
+OUTFILE=${PARAMS[1]}
+OUTFILE=${OUTFILE/.a/.a.bc}
+PARAMS[1]=$OUTFILE
+INFILES=${PARAMS[@]}
+INFILES=${INFILES//.o/.bc}
+
+$LLVM_LINK $INFILES
+echo "#$OUTFILE: $INFILES" >> $MAKEFILE_NAME
+echo -e "#"\\\t"$LLVM_LINK $INFILES" >> $MAKEFILE_NAME
+echo "" >> $MAKEFILE_NAME
+echo "$LLVM_LINK $INFILES" >> $LOG_NAME
+
+exit $exit_status

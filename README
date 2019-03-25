@@ -1,0 +1,10 @@
+some useful tools
+
+generate-tags.sh:
+When using ctags on Linux source, symbols with the same name may appear in directories like arch/XX and drivers. This script guide ctags to bypass these directories.
+
+search-blob.sh:
+git commit log provides a file's path and blob number but does not associate the blob number with commit/tag number. This script searches into git history and looks for the corresponding commit.
+
+ar/gcc:
+Wrappers for ar/gcc to record ar/gcc commands and translate to LLVM-related commands.
