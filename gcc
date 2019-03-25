@@ -1,7 +1,7 @@
 #!/bin/bash
 # record all compilation events to be used later for llvm-ir extraction
 
-ROOTDIR=/home/xywang/quo/ipads/tlb-bug/linux-5.0
+ROOTDIR=
 if [ -z $ROOTDIR ]; then
 	echo "error: no rootdir specified in $0"
 	exit 1
