@@ -77,7 +77,7 @@ if [ "$LINK_MODE"	== "yes" ]; then
 	fi
 	echo "" >> $MAKEFILE_NAME
 elif [ "$DEP_MODE" != "yes" ]; then
-	$CLANG ${PARAMS[@]} -emit-llvm
+	$CLANG ${PARAMS[@]} -emit-llvm 2>/dev/null >/dev/null
 	echo "$CLANG ${PARAMS[@]} -emit-llvm" >> $LOG_NAME
 fi
 
