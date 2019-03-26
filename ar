@@ -25,9 +25,15 @@ PARAMS=($@)
 PARAMS[0]=-o	# command
 OUTFILE=${PARAMS[1]}
 OUTFILE=${OUTFILE/.a/.a.bc}
-PARAMS[1]=$OUTFILE
+if [ "${#PARAMS[@]}" == "2" ]; then
+	echo "touch $OUTFILE" >> $LOG_NAME
+	touch $OUTFILE
+	exit $exit_status
+fi
 INFILES=${PARAMS[@]}
 INFILES=${INFILES//.o/.bc}
+INFILES=${INFILES//.a/.a.bc}
+PARAMS[1]=$OUTFILE
 
 $LLVM_LINK $INFILES
 echo "#$OUTFILE: $INFILES" >> $MAKEFILE_NAME
